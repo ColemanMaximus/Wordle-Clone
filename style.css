@@ -114,6 +114,10 @@
   border-color: yellow;
 }
 
+.red {
+  border-color: #f03e3e;
+}
+
 .btns {
   display: flex;
 }

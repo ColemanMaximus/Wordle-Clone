@@ -1,5 +1,5 @@
 const WORD_URL = "https://words.dev-apis.com/word-of-the-day";
-const letters = "abcdefghijklmnopqrstuvwxyz"
+const VALIDATE_URL = "https://words.dev-apis.com/validate-word"
 
 const menu = document.querySelector(".menu");
 const roundContainer = document.querySelector(".round");
@@ -22,6 +22,15 @@ async function fetchWord(random) {
   const response = await promise.json();
 
   return response.word.toUpperCase();
+}
+
+async function isWord(word) {
+  const promise = await fetch(VALIDATE_URL, {
+    method: "POST",
+    body: JSON.stringify({ word: word })
+  });
+  const response = await promise.json();
+  return response.validWord;
 }
 
 function processKeyUp(key) {
@@ -48,28 +57,32 @@ function setupListener() {
     processKeyUp(key);
   });
 
-  document.querySelector(".btn-play").addEventListener("click", () => {
+  addListener(".btn-play", "click", () => {
     hideMenu();
     showTiles();
     setupRound();
   });
 
-  document.querySelector(".btn-nextround").addEventListener("click", () => {
+  addListener(".btn-nextround", "click", () => {
     round++;
     setupRound();
     hideWinScreen();
   });
 
-  document.querySelector(".btn-reset").addEventListener("click", () => {
+  addListener(".btn-reset", "click", () => {
     setupRound();
     hideLoseScreen();
   });
 
-  document.querySelector(".btn-quit").addEventListener("click", () => {
+  addListener(".btn-quit", "click", () => {
     hideLoseScreen();
     hideTiles();
     showMenu();
   });
+}
+
+function addListener(selector, event, func) {
+  document.querySelector(selector).addEventListener(event, func)
 }
 
 async function setupRound() {
@@ -105,12 +118,18 @@ function show(element) {
   element.classList.remove("hide");
 }
 
-function checkRow() {
+async function checkRow() {
   if (rowPosition < lettersPerRow) return;
   let combined = rowBuffer.join("");
 
+  let valid = await isWord(combined);
 
   for (let i = 0; i < rowBuffer.length; i++) {
+    if (!valid) {
+      updateTile(row, i, "red");
+      continue;
+    }
+
     updateTile(row, i, "used");
     
     let letter = rowBuffer[i];
@@ -124,6 +143,8 @@ function checkRow() {
 
     updateTile(row, i, "yellow");
   }
+
+  if (!valid) return;
 
   if (combined == word) {
     winRound();
@@ -157,7 +178,7 @@ function getRows() {
 }
 
 function isLetter(letter) {
-  return letters.includes(letter);
+  return /^[a-zA-Z]$/.test(letter);
 }
 
 function isMatch(letter, position) {
@@ -178,6 +199,10 @@ function forward() {
 function backward() {
   if (rowPosition == 0) return;
   
+  document.querySelectorAll(".red").forEach((e) => {
+    e.classList.remove("red");
+  });
+
   updateTile(row, rowPosition - 1, "delete");
   rowPosition--;
   rowBuffer.pop();
@@ -197,19 +222,22 @@ function updateTile(row, position, action) {
       clearTileClasses(tile);
       break;
     case "green":
-      tile.classList.add("green")
+      tile.classList.add("green");
       break;
     case "yellow":
-      tile.classList.add("yellow")
+      tile.classList.add("yellow");
+      break;
+    case "red":
+      tile.classList.add("red");
       break;
     case "used":
-      tile.classList.add("used-tile")
+      tile.classList.add("used-tile");
       break;
   }
 }
 
 function clearTileClasses(tile) {
-  tile.classList.remove("used-tile", "green", "yellow");
+  tile.classList.remove("used-tile", "green", "yellow", "red");
 }
 
 function clearTiles() {
