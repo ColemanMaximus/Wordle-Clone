@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wordle Clone</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="wrapper">
+      <h1 class="title">WORDLE CLONE</h1>
+      <div class="container">
+        <div class="loading"></div>
+        <div class="menu">
+          <h2 class="menu-title">Instructions</h2>
+          <p class="description">Guess the word for each round. You have 6 chances to find the word. Type in letters with your keyboard, you have a chance to come across letters which help form the word for the round. Yellow means the word contains the letter, green means the letter is in the correct place. Red means the letters don't form a word. Remember to type a word which exists.</p>
+          <button class="btn btn-play">PLAY</button>
+          <div class="highscore">High Score: <span class="score">0</span></div>
+        </div>
+        <div class="screen win-screen hide">
+          <span class="word-header">The Word Was</span>
+          <span class="word"></span>
+          <div class="win">YOU WIN!</div>
+          <button class="btn btn-nextround">NEXT ROUND</button>
+        </div>
+        <div class="screen lose-screen hide">
+          <span class="word-header">The Word Was</span>
+          <span class="word"></span>
+          <div class="lose">YOU LOSE</div>
+          <div class="btns">
+            <button class="btn btn-reset">RESET</button>
+            <button class="btn btn-quit">QUIT</button>
+          </div>
+        </div>
+        <div class="tiles hide">
+          <span class="round">Round: 1</span>
+          <div class="row">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+          </div>
+          <div class="row">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+          </div>
+          <div class="row">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+          </div>
+          <div class="row">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+          </div>
+          <div class="row">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+          </div>
+          <div class="row">
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+            <div class="tile"></div>
+          </div>
+        </div>
+      </div>
+      <div class="keyboard">
+        <div class="row">
+          <button class="key">A</button>
+          <button class="key">B</button>
+          <button class="key">C</button>
+          <button class="key">D</button>
+          <button class="key">E</button>
+          <button class="key">F</button>
+          <button class="key">G</button>
+          <button class="key">H</button>
+          <button class="key">I</button>
+          <button class="key">J</button>
+        </div>
+        <div class="row">
+          <button class="key">K</button>
+          <button class="key">L</button>
+          <button class="key">M</button>
+          <button class="key">N</button>
+          <button class="key">O</button>
+          <button class="key">P</button>
+          <button class="key">Q</button>
+          <button class="key">R</button>
+          <button class="key">S</button>
+          <button class="key">T</button>
+        </div>
+        <div class="row">
+          <button class="key">U</button>
+          <button class="key">V</button>
+          <button class="key">W</button>
+          <button class="key">X</button>
+          <button class="key">Y</button>
+          <button class="key">Z</button>
+          <button class="key backspace">←</button>
+        </div>
+      </div>
+      <span class="copyright">Created by Maximus | Source: <a href="https://github.com/ColemanMaximus/wordle-clone" target="_blank">GitHub</a></span>
+    </div>
+    <script src="./app.js"></script>
+  </body>
+</html>
