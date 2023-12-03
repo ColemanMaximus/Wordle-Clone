@@ -218,20 +218,11 @@ async function checkRow() {
 
 // Returns a list of all the tile rows.
 function getRows() {
-  let rows = [[], [], [], [], [], []];
+  return document.querySelectorAll(".row");
+}
 
-  let i = 0;
-  tileContainer.childNodes.forEach((n) => {
-    if (n.nodeName != "DIV") return;
-    
-    n.childNodes.forEach((cn) => {
-      if (cn.nodeName != "DIV") return;
-      rows[i].push(cn);
-    })
-    i++;
-  })
-
-  return rows;
+function getTiles() {
+  return document.querySelectorAll(".tile");
 }
 
 function isLetter(letter) {
@@ -272,8 +263,7 @@ function backward() {
 
 // Updates the tiles according to actions.
 function updateTile(row, position, action) {
-  let rows = getRows();
-  let tile = rows[row][position];
+  let tile = getRows()[row].childNodes[position];
 
   if (!tile) return;
   switch (action) {
@@ -307,12 +297,9 @@ function clearTileClasses(tile) {
 
 // Remove all tile styles, used for new rounds.
 function clearTiles() {
-  let rows = getRows();
-  
-  rows.forEach((r) => {
-    for (let i = 0; i < r.length; i++) {
-      updateTile(rows.indexOf(r), i, "delete");
-    }
+  Array.from(getTiles()).forEach((tile) => {
+    tile.innerText = "";
+    clearTileClasses(tile);
   });
 }
 
