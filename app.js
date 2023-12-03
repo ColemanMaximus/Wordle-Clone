@@ -17,19 +17,23 @@ let highscore = 0;
 let rowBuffer;
 
 async function fetchWord(random) {
+  showLoading();
   const query = `${WORD_URL}${random ? "?random=1" : ""}`;
   const promise = await fetch(query);
   const response = await promise.json();
+  hideLoading();
 
   return response.word.toUpperCase();
 }
 
 async function isWord(word) {
+  showLoading();
   const promise = await fetch(VALIDATE_URL, {
     method: "POST",
     body: JSON.stringify({ word: word })
   });
   const response = await promise.json();
+  hideLoading();
   return response.validWord;
 }
 
@@ -288,6 +292,14 @@ function showLoseScreen() {
 
 function hideLoseScreen() {
   hide(screens[1]);
+}
+
+function showLoading() {
+  show(document.querySelector(".loading"))
+}
+
+function hideLoading() {
+  hide(document.querySelector(".loading"))
 }
 
 function displayWord(element) {
